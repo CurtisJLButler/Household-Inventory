@@ -2,20 +2,32 @@
   <header>
     <img alt="Vue logo" class="logo" src="../assets/logo.svg" width="125" height="125" />
     <div class="wrapper">
-      <h1>Welcome to the List App!</h1>
+      <h1>Welcome to the Inventory App!</h1>
     </div>
   </header>
 
   <main>
-    <ul>
-      <li v-for="item in listItems" :key="item.id">
-        {{ item.name }} - Quantity: {{ item.count }}
-        <div class="button-container">
-          <button @click="handleHaveNoneClick(item)">Have none</button>
-          <button @click="handleAddToListClick(item)">Add to list</button>
-        </div>
-      </li>
-    </ul>
+    <table>
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Quantity</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in listItems" :key="item.id">
+          <td>{{ item.name }}</td>
+          <td>{{ item.count }}</td>
+          <td>
+            <div class="button-container">
+              <button class="list" @click="handleAddToListClick(item)">Add to list</button>
+              <button class="none" @click="handleHaveNoneClick(item)">Have none</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </main>
 </template>
 
@@ -45,14 +57,48 @@ export default {
 </script>
 
 <style>
-/* Add any custom styles here */
-button {
-  margin-left: 10px;
+
+/* General Table Styling */
+table {
+  width: 50%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  text-align: left;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color:rgb(206, 206, 206);
 }
 
 .button-container {
   display: flex;
-  justify-content: start;
+  justify-content: center;
   gap: 10px;
 }
+
+button {
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #e0e0e0;
+}
+
+.list{
+/* Add to list button*/
+  background-color:rgb(126, 109, 255);
+}
+
+.none{
+/* Have none button*/
+  background-color:rgb(255, 71, 71);
+}
+
 </style>
