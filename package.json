@@ -12,7 +12,8 @@
     "lint": "run-s lint:*"
   },
   "dependencies": {
-    "node": "^18.20.8",
+    "express": "^5.1.0",
+    "mongoose": "^8.13.1",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
