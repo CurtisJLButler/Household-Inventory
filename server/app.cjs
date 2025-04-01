@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const Item = require('./models/item.cjs');
+const Items = require('./models/items.cjs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,12 +11,23 @@ app.use(express.json());
 
 app.get('/api/items', async (req, res) => {
   try {
-    const items = await Item.find();
+    const items = await Items.find();
     res.json(items);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
+
+app.post('/api/items', async (req, res) => {
+  try {
+    const newItem = new Items(req.body);
+    const savedItem = await newItem.save();
+    res.status(201).json(savedItem);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 
 
 
