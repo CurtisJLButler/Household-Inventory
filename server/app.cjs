@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const Task = require('./models/task');
+const Item = require('./models/item.cjs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -9,10 +9,10 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 
-app.get('/api/tasks', async (req, res) => {
+app.get('/api/items', async (req, res) => {
   try {
-    const tasks = await Task.find();
-    res.json(tasks);
+    const items = await Item.find();
+    res.json(items);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -21,7 +21,7 @@ app.get('/api/tasks', async (req, res) => {
 
 
 
-mongoose.connect('mongodb://localhost:27017', {
+mongoose.connect('mongodb://localhost:27017/household-inventory', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
