@@ -1,3 +1,7 @@
+<script setup>
+import HelloWorld from './components/Navbar.vue'
+</script>
+
 <template>
   <nav>
     <router-link to="/">Home</router-link>
