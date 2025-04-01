@@ -3,7 +3,10 @@ const mongoose = require('mongoose');
 const Items = require('./models/items.cjs');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+
+require('dotenv').config();
+const PORT = process.env.PORT;
+const MONGO_DB = process.env.MONGO_DB;
 
 
 app.use(express.json());
@@ -28,7 +31,23 @@ app.post('/api/items', async (req, res) => {
   }
 });
 
-
+app.patch('/api/items/:id', async (req, res) => {
+  try {
+    const updatedItem = await Items.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    
+    if (!updatedItem) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+    
+    res.json(updatedItem);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 
 
