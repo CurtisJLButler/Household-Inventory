@@ -12,6 +12,7 @@
     "lint": "run-s lint:*"
   },
   "dependencies": {
+    "dotenv": "^16.4.7",
     "express": "^5.1.0",
     "mongoose": "^8.13.1",
     "vue": "^3.5.13",
