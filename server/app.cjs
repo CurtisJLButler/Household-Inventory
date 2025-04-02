@@ -49,6 +49,29 @@ app.patch('/api/items/:id', async (req, res) => {
   }
 });
 
+app.delete('api/items/:id', async (req,res) => {
+  Items.findByIdAndDelete(req.params.id).exec()
+  .then(result => {
+    if (!result) {
+        // If no book was found
+        res.status(404).send(); // This is fine, but let's ensure this path is not left unhandled
+    } else {
+        // If deletion was successful, but we're missing the proper response status
+        res.status(200).send({
+            message: "Object was deleted!",
+            book: result
+        });
+    }
+})
+.catch(err => {
+  if (err.name === "CastError") {
+      res.status(400).send({ message: "Invalid ID Provided" });
+  } else {
+      res.status(500).send({ message: "Server error, come back soon" });
+  }
+});
+})
+
 
 
 mongoose.connect('mongodb://localhost:27017/household-inventory', {
