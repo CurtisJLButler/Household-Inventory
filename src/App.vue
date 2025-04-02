@@ -3,12 +3,7 @@ import Navbar from './components/Navbar.vue'
 </script>
 
 <template>
-  <nav>
-    <router-link to="/">Home</router-link>
-    <router-link to="/test">Test</router-link>
-    <router-link to="/inventory">Inventory</router-link>
-    <router-link to="/listtoget">List to get</router-link>
-  </nav>
+  <Navbar/>
   <router-view></router-view>
 </template>
 
@@ -41,5 +36,7 @@ header img {
   font-size: 16px;
   margin-top: 5px;
 }
+
+
 
 </style>
