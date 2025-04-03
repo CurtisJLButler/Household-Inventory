@@ -16,6 +16,7 @@ app.get('/api/items', async (req, res) => {
   try {
     const items = await Items.find();
     res.json(items);
+    console.log("Getting data")
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -75,8 +76,6 @@ app.delete('api/items/:id', async (req,res) => {
 
 
 mongoose.connect('mongodb://localhost:27017/household-inventory', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
 }).then(() => {
   console.log('Connected to MongoDB');
 }).catch(err => {
