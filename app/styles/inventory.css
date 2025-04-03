@@ -8,11 +8,11 @@ table {
   
   th, td {
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #000000;
   }
   
   th {
-    background-color: rgb(206, 206, 206);
+    background-color: rgb(255, 255, 255);
   }
   
   .button-container {
