@@ -14,7 +14,13 @@
     "@remix-run/node": "^2.16.4",
     "@remix-run/react": "^2.16.4",
     "@remix-run/serve": "^2.16.4",
+<<<<<<< HEAD
     "isbot": "^4.1.0",
+=======
+    "axios": "^1.8.4",
+    "isbot": "^4.1.0",
+    "mongoose": "^8.13.1",
+>>>>>>> c2955ab666c37bafce8f74c236a3ad492012906e
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
