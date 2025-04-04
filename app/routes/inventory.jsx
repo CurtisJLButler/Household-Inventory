@@ -48,6 +48,7 @@ export default function Inventory() {
                       <button className="list" onClick={() => handleAddToListClick(item)}>
                         Add to list
                       </button>
+                      
                       <button className="none" onClick={() => handleHaveNoneClick(item)}>
                         Have none
                       </button>

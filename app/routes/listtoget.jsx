@@ -47,14 +47,12 @@ export const loader = async () => {
                     <div className="button-container">
                     <button
                       className="px-4 py-2 bg-indigo-500 text-white rounded hover:bg-indigo-600"
-                      onClick={() => handleMarkAsBoughtClick(item)}
-                    >
+                      onClick={() => handleMarkAsBoughtClick(item)}>
                       Mark as Bought
                     </button>
                     <button
                       className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-                      onClick={() => handleRemoveClick(item)}
-                    >
+                      onClick={() => handleRemoveClick(item)}>
                       Remove
                     </button>
                   </div>
