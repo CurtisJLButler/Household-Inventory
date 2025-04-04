@@ -11,10 +11,23 @@ const MONGO_DB = process.env.MONGO_DB;
 
 app.use(express.json());
 
-
+/*
+Get, Post, Patch, Delete methods for
+Displaying, adding, editing and deleting items in the database
+*/
 app.get('/api/items', async (req, res) => {
   try {
     const items = await Items.find();
+    res.json(items);
+    console.log("Getting data")
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+app.get('/api/items/:id', async (req, res) => {
+  try {
+    const items = await Items.findById(req.params.id).exec()
     res.json(items);
     console.log("Getting data")
   } catch (err) {
