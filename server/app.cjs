@@ -23,6 +23,10 @@ app.get('/api/items', async (req, res) => {
 });
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+//Adds item or updates item if its already there
+>>>>>>> Stashed changes
 =======
 //Adds item or updates item if its already there
 >>>>>>> Stashed changes
@@ -51,6 +55,7 @@ app.post('/api/items', async (req, res) => {
     res.status(201).json(savedItem);
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 app.patch('/api/items/:id', async (req, res) => {
   try {
     const updatedItem = await Items.findByIdAndUpdate(
@@ -64,6 +69,8 @@ app.patch('/api/items/:id', async (req, res) => {
     }
     
     res.json(updatedItem);
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
   } catch (err) {
