@@ -10,6 +10,7 @@ export default function Navbar({ isHomepage }) {
   return (
     <nav>
       <ul className="nav-list">
+        // If isHomepage is true, then it will hide this first link
         <li className={`nav-link-wrapper ${isHomepage ? "hide" : ""}`}>
           <Link to="/" className="nav-link">Home</Link>
         </li>

@@ -41,10 +41,10 @@ export async function action({ request }) {
   // Makes an object with the data from above
   const updatedFields = {
     ...(id),
-    item: item?.toString(),
-    quantity: quantity?.toString() || "",
+    item: item,
+    quantity: quantity,
     isRunningLow: isRunningLow === "true",
-    notes: notes?.toString(),
+    notes: notes,
   };
 
   /*

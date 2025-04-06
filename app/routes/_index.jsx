@@ -5,6 +5,12 @@ import Nav from "../routes/components/navbar";
 export const links = () => [{ rel: "stylesheet", href: styles }];
 
 export default function HomePage() {
+
+
+  // Simple home page
+
+
+
   return (
     <div className="home-container">
       <header className="home-header">

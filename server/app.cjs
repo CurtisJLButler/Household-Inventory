@@ -16,15 +16,18 @@ Get, Post, Patch, Delete methods for
 Displaying, adding, editing and deleting items in the database
 */
 
-//Grabs all items
+//Grabs all items or all items that are running low
 app.get('/api/items', async (req, res) => {
   try {
     //Gets all items from the database
     var items
     if (!req.query.lowOn) {
+
+      // Returns all items
       items = await Items.find();
       console.log("Getting all items")
     } else {
+      // Returns only the items that are running low
         items = await Items.find({ isRunningLow: true });
         console.log("Getting all items that are running low")
     }
@@ -38,17 +41,6 @@ app.get('/api/items', async (req, res) => {
   }
 });
 
-//Grabs item by id
-app.get('/api/items/:id', async (req, res) => {
-  try {
-    const items = await Items.findById(req.params.id).exec()
-    res.json(items);
-    console.log("Getting data")
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
 //Adds item or updates item if its already there
 app.post('/api/items', async (req, res) => {
   try {
@@ -57,6 +49,8 @@ app.post('/api/items', async (req, res) => {
     // Check if the item already exists by name
     const existingItem = await Items.findOne({ item });
 
+    // if the item actually does exist, then
+    // it will update the item instead of adding a new one
     if (existingItem) {
       // Item exists – perform update instead (PATCH logic)
       const updatedItem = await Items.findByIdAndUpdate(
@@ -68,7 +62,7 @@ app.post('/api/items', async (req, res) => {
       return res.status(200).json(updatedItem);
     }
 
-    // Item does not exist – create new item
+    // Item does not exist it creates a new item
     const newItem = new Items(req.body);
     const savedItem = await newItem.save();
     console.log("New item created");

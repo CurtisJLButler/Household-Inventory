@@ -107,6 +107,10 @@ export default function Inventory() {
                     </td>
                     <td style={{ border: "none"  }}></td>
                   </Form>
+                  {/*
+                  No delete item form because we don't want users to click
+                  it thinking that it will just remove it from the shopping list page
+                  */}
                 </tr>
               ))
             )}
