@@ -22,16 +22,35 @@ app.get('/api/items', async (req, res) => {
   }
 });
 
+<<<<<<< Updated upstream
+=======
+//Adds item or updates item if its already there
+>>>>>>> Stashed changes
 app.post('/api/items', async (req, res) => {
   try {
+    const { item } = req.body;
+
+    // Check if the item already exists by name
+    const existingItem = await Items.findOne({ item });
+
+    if (existingItem) {
+      // Item exists – perform update instead (PATCH logic)
+      const updatedItem = await Items.findByIdAndUpdate(
+        existingItem._id,
+        req.body,
+        { new: true }
+      );
+      console.log("Item already existed – updated it instead");
+      return res.status(200).json(updatedItem);
+    }
+
+    // Item does not exist – create new item
     const newItem = new Items(req.body);
     const savedItem = await newItem.save();
+    console.log("New item created");
     res.status(201).json(savedItem);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
 
+<<<<<<< Updated upstream
 app.patch('/api/items/:id', async (req, res) => {
   try {
     const updatedItem = await Items.findByIdAndUpdate(
@@ -45,7 +64,10 @@ app.patch('/api/items/:id', async (req, res) => {
     }
     
     res.json(updatedItem);
+=======
+>>>>>>> Stashed changes
   } catch (err) {
+    console.error("Error in POST /api/items:", err.message);
     res.status(500).json({ message: err.message });
   }
 });
@@ -54,10 +76,8 @@ app.delete('api/items/:id', async (req,res) => {
   Items.findByIdAndDelete(req.params.id).exec()
   .then(result => {
     if (!result) {
-        // If no book was found
-        res.status(404).send(); // This is fine, but let's ensure this path is not left unhandled
+        res.status(404).send();
     } else {
-        // If deletion was successful, but we're missing the proper response status
         res.status(200).send({
             message: "Object was deleted!",
             book: result
