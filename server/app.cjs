@@ -20,11 +20,18 @@ Displaying, adding, editing and deleting items in the database
 app.get('/api/items', async (req, res) => {
   try {
     //Gets all items from the database
-    const items = await Items.find();
+    var items
+    if (!req.query.lowOn) {
+      items = await Items.find();
+      console.log("Getting all items")
+    } else {
+        items = await Items.find({ isRunningLow: true });
+        console.log("Getting all items that are running low")
+    }
     //Sets res to the items found as json data
     res.json(items);
-    //Logs "Getting data" for debugging puposes
-    console.log("Getting data")
+    
+    
   } catch (err) {
     //returns server error
     res.status(500).json({ message: err.message });
@@ -69,26 +76,6 @@ app.post('/api/items', async (req, res) => {
   } catch (err) {
       res.status(500).json({ message: err.message });
     }})
-
-
-app.patch('/api/items/:id', async (req, res) => {
-  try {
-    const updatedItem = await Items.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-    
-    if (!updatedItem) {
-      return res.status(404).json({ message: 'Item not found' });
-    }
-    
-    res.json(updatedItem);
-  } catch (err) {
-    console.error("Error in POST /api/items:", err.message);
-    res.status(500).json({ message: err.message });
-  }
-});
 
 //Deletes item
 app.delete('/api/items/:id', async (req,res) => {

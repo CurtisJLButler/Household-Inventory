@@ -1,13 +1,13 @@
 import { useLoaderData, Form, redirect } from "@remix-run/react";
+import { get, post } from "./components/scripts";
 import styles from "../styles/inventory.css";
-import { get, post, del } from "./components/scripts";
 
-// Imports the styles from the style sheet
+
 export const links = () => [{ rel: "stylesheet", href: styles }];
 
 // Loads server data, in this case it's getting the items from the server
 export const loader = async () => {
-  const response = await get();
+  const response = await get(true);
   const data = await response.json();
   return { items: data };
 };
@@ -47,42 +47,40 @@ export async function action({ request }) {
     notes: notes?.toString(),
   };
 
-  /*
-  I post the data and don't patch it because I have functionality 
-  in the server to handle if there is an item with the same name
-  */
+  /* I post the data and don't patch it because I have functionality 
+  in the server to handle if there is an item with the same name */
   await post(updatedFields);
 
   // Redirects back to the inventory page
   return redirect("/inventory");
 }
-
+  
 export default function Inventory() {
   // Sets the object "items" to the data it gets from the get request in scripts
   const { items } = useLoaderData();
 
   return (
     <div>
-      <header>
-        <div className="wrapper">
-          <h1>Welcome to the Inventory!</h1>
+      <header className="wrapper">
+        <div>
+          <h1>Welcome to the shopping List</h1>
         </div>
       </header>
+
       <main>
         <table>
           <thead>
             <tr>
               <th>Item Name</th>
-              <th>Amount Left</th>
+              <th>Quantity</th>
               <th>Need to Buy More</th>
               <th>Notes</th>
             </tr>
           </thead>
           <tbody>
-            {/* Tells the user that there are no items in the database */}
-            {items.length === 0 ? (
+          {items.length === 0 ? (
               <tr>
-                <td colSpan={4}><em>No items available.</em></td>
+                <td colSpan={4}><em>No items are low on stock.</em></td>
               </tr>
             ) : (
               items.map((item) => (
@@ -107,46 +105,11 @@ export default function Inventory() {
                     <td style={{ border: "none"  }}>
                       <button type="submit" style={{ backgroundColor: "#4CAF50", color: "white"}}>Save</button>
                     </td>
-                  </Form>
-
-                  {/*
-                  Second form here because a form can only have
-                  one submit action, and we need to be able to save and delete
-                  */}
-                  <Form method="post" style={{ display: "contents" }}>
-                    <input type="hidden" name="id" value={item._id} />
-                    <input type="hidden" name="actionType" value="delete" />
-                    <td style={{ border: "none" }}>
-                      <button type="submit" style={{ backgroundColor: "red", color: "white" }}>
-                        Delete
-                      </button>
-                    </td>
+                    <td style={{ border: "none"  }}></td>
                   </Form>
                 </tr>
               ))
             )}
-
-            {/* New item form*/}
-            <Form method="post" style={{ display: "contents" }}>
-              <tr>
-                <input type="hidden" name="actionType" value="save" />
-                <td>
-                  <input type="text" name="item" placeholder="New item name" />
-                </td>
-                <td>
-                  <input type="text" name="quantity" placeholder="e.g. 2 boxes" />
-                </td>
-                <td>
-                  <input type="checkbox" name="isRunningLow" value="true" />
-                </td>
-                <td>
-                  <input type="text" name="notes" placeholder="Optional notes" />
-                </td>
-                <td style={{ border: "none" }}>
-                  <button type="submit" style={{ backgroundColor: "#4CAF50", color: "white"}}>Add Item</button>
-                </td>
-              </tr>
-            </Form>
           </tbody>
         </table>
       </main>

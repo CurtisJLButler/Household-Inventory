@@ -33,7 +33,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <Nav />
+        <Nav isHomepage={false}/>
         {children}
         <ScrollRestoration />
         <Scripts />

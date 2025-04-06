@@ -1,12 +1,22 @@
 import { Link } from "@remix-run/react";
+import styles from "../../styles/navbar.css";
 
-export default function Navbar() {
+// Imports the styles from the style sheet
+export const links = () => [{ rel: "stylesheet", href: styles }];
+
+
+
+export default function Navbar({ isHomepage }) {
   return (
     <nav>
-      <Link to="/">Home</Link>
-      <Link to="/test">Test</Link>
-      <Link to="/inventory">Inventory</Link>
-      <Link to="/listtoget">List to get</Link>
+      <ul className="nav-list">
+        <li className={`nav-link-wrapper ${isHomepage ? "hide" : ""}`}>
+          <Link to="/" className="nav-link">Home</Link>
+        </li>
+        <li><Link to="/inventory"className="nav-link">Inventory</Link></li>
+        <li><Link to="/shopping-list"className="nav-link">Shopping List</Link></li>
+      </ul>
     </nav>
   );
+  
 }

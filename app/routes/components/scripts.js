@@ -1,7 +1,16 @@
 import axios from "axios";
-export const get = async () => {
+export const get = async (isLow) => {
   try {
-    const response = await axios.get("http://localhost:3000/api/items");
+    var response
+    if (!isLow){
+      response = await axios.get("http://localhost:3000/api/items/");
+    } else {
+      response = await axios.get("http://localhost:3000/api/items/", {
+        params: { lowOn: true}
+      });
+    }
+    
+    
     return new Response(JSON.stringify(response.data), {
       headers: { "Content-Type": "application/json" },
     });
