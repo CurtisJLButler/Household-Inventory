@@ -42,18 +42,7 @@ app.get('/api/items/:id', async (req, res) => {
   }
 });
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
 //Adds item or updates item if its already there
->>>>>>> Stashed changes
-=======
-//Adds item or updates item if its already there
->>>>>>> Stashed changes
-=======
-//Adds item or updates item if its already there
->>>>>>> Stashed changes
 app.post('/api/items', async (req, res) => {
   try {
     const { item } = req.body;
@@ -77,10 +66,11 @@ app.post('/api/items', async (req, res) => {
     const savedItem = await newItem.save();
     console.log("New item created");
     res.status(201).json(savedItem);
+  } catch (err) {
+      res.status(500).json({ message: err.message });
+    }})
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+
 app.patch('/api/items/:id', async (req, res) => {
   try {
     const updatedItem = await Items.findByIdAndUpdate(
@@ -94,12 +84,6 @@ app.patch('/api/items/:id', async (req, res) => {
     }
     
     res.json(updatedItem);
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
   } catch (err) {
     console.error("Error in POST /api/items:", err.message);
     res.status(500).json({ message: err.message });
