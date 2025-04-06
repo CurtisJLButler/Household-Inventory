@@ -11,10 +11,30 @@ const MONGO_DB = process.env.MONGO_DB;
 
 app.use(express.json());
 
+/*
+Get, Post, Patch, Delete methods for
+Displaying, adding, editing and deleting items in the database
+*/
 
+//Grabs all items
 app.get('/api/items', async (req, res) => {
   try {
+    //Gets all items from the database
     const items = await Items.find();
+    //Sets res to the items found as json data
+    res.json(items);
+    //Logs "Getting data" for debugging puposes
+    console.log("Getting data")
+  } catch (err) {
+    //returns server error
+    res.status(500).json({ message: err.message });
+  }
+});
+
+//Grabs item by id
+app.get('/api/items/:id', async (req, res) => {
+  try {
+    const items = await Items.findById(req.params.id).exec()
     res.json(items);
     console.log("Getting data")
   } catch (err) {
@@ -86,7 +106,8 @@ app.patch('/api/items/:id', async (req, res) => {
   }
 });
 
-app.delete('api/items/:id', async (req,res) => {
+//Deletes item
+app.delete('/api/items/:id', async (req,res) => {
   Items.findByIdAndDelete(req.params.id).exec()
   .then(result => {
     if (!result) {
@@ -102,13 +123,13 @@ app.delete('api/items/:id', async (req,res) => {
   if (err.name === "CastError") {
       res.status(400).send({ message: "Invalid ID Provided" });
   } else {
-      res.status(500).send({ message: "Server error, come back soon" });
+      res.status(500).send({ message });
   }
 });
 })
 
 
-
+//Connects to MongoDB
 mongoose.connect('mongodb://localhost:27017/household-inventory', {
 }).then(() => {
   console.log('Connected to MongoDB');
@@ -116,7 +137,7 @@ mongoose.connect('mongodb://localhost:27017/household-inventory', {
   console.error('MongoDB connection error:', err);
 });
 
-
+//Starts the listening on port in the .env for http requests
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
